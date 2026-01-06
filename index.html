@@ -12,13 +12,13 @@
             font-family: 'Space Grotesk', sans-serif; 
             background-color: #050505;
             overflow-x: hidden;
-            cursor: none; /* Hide default cursor */
+            cursor: default; 
         }
         
         .glass-card {
-            background: rgba(30, 30, 30, 0.4);
+            background: rgba(40, 40, 40, 0.7);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             transform-style: preserve-3d;
         }
 
@@ -39,6 +39,7 @@
             border-radius: 50%;
             z-index: 9999;
             pointer-events: none;
+            display: none;
         }
         .cursor-dot {
             width: 8px;
@@ -52,7 +53,6 @@
             border: 1px solid rgba(96, 165, 250, 0.5);
             transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
         }
-        /* Hover state for cursor */
         body.hovering .cursor-outline {
             width: 60px;
             height: 60px;
@@ -61,602 +61,466 @@
         }
 
         /* Glitch Effect */
-        .glitch-wrapper {
-            position: relative;
-            display: inline-block;
-        }
-        .glitch-wrapper::before,
-        .glitch-wrapper::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.8;
-            background: #050505; 
+        .glitch-wrapper { position: relative; display: inline-block; }
+        .glitch-wrapper::before, .glitch-wrapper::after {
+            content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.8; background: transparent;
         }
         .glitch-wrapper::before {
-            color: #0ff;
-            z-index: -1;
-            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-            transform: translate(-2px, -2px);
-            animation: glitch-anim-1 3s infinite linear alternate-reverse;
+            color: #0ff; z-index: -1; clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%); transform: translate(-2px, -2px); animation: glitch-anim-1 3s infinite linear alternate-reverse;
         }
         .glitch-wrapper::after {
-            color: #f0f;
-            z-index: -2;
-            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-            transform: translate(2px, 2px);
-            animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
+            color: #f0f; z-index: -2; clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%); transform: translate(2px, 2px); animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
         }
-        @keyframes glitch-anim-1 {
-            0% { transform: translate(-2px, -2px); }
-            20% { transform: translate(2px, 2px); }
-            40% { transform: translate(-2px, 2px); }
-            60% { transform: translate(2px, -2px); }
-            80% { transform: translate(0px, 0px); }
-            100% { transform: translate(-2px, -2px); }
-        }
-        @keyframes glitch-anim-2 {
-            0% { transform: translate(2px, 2px); }
-            20% { transform: translate(-2px, -2px); }
-            40% { transform: translate(2px, -2px); }
-            60% { transform: translate(-2px, 2px); }
-            80% { transform: translate(0px, 0px); }
-            100% { transform: translate(2px, 2px); }
-        }
+        @keyframes glitch-anim-1 { 0% { transform: translate(-2px, -2px); } 100% { transform: translate(-2px, -2px); } }
+        @keyframes glitch-anim-2 { 0% { transform: translate(2px, 2px); } 100% { transform: translate(2px, 2px); } }
 
         /* Ticker */
         .ticker-wrap {
-            width: 100%;
-            overflow: hidden;
-            background: rgba(0, 0, 0, 0.9);
-            border-top: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(5px);
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            z-index: 50;
-            height: 40px;
-            display: flex;
-            align-items: center;
+            width: 100%; overflow: hidden; background: rgba(0, 0, 0, 0.9); border-top: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px); position: fixed; bottom: 0; left: 0; z-index: 50; height: 40px; display: flex; align-items: center;
         }
-        .ticker {
-            display: flex;
-            white-space: nowrap;
-            animation: ticker 40s linear infinite;
-        }
+        .ticker { display: flex; white-space: nowrap; animation: ticker 40s linear infinite; }
         .ticker-item {
-            flex-shrink: 0;
-            padding: 0 2rem;
-            font-size: 0.8rem;
-            color: #9ca3af;
-            font-family: 'Space Grotesk', monospace;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            flex-shrink: 0; padding: 0 2rem; font-size: 0.8rem; color: #9ca3af; font-family: 'Space Grotesk', monospace;
+            text-transform: uppercase; letter-spacing: 0.1em; display: flex; align-items: center; gap: 0.5rem;
         }
-        .ticker-item span {
-            color: #60a5fa;
-        }
-        @keyframes ticker {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); } /* Move half width assuming duplicated content */
-        }
+        .ticker-item span { color: #60a5fa; }
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* Scanline effect */
         .scanline {
-            background: linear-gradient(
-                to bottom,
-                rgba(255,255,255,0),
-                rgba(255,255,255,0) 50%,
-                rgba(0,0,0,0.1) 50%,
-                rgba(0,0,0,0.1)
-            );
-            background-size: 100% 4px;
-            pointer-events: none;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px; pointer-events: none;
         }
     </style>
 </head>
 <body class="bg-black text-white min-h-screen">
 
-    <!-- Custom Cursor -->
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
-    <!-- Background Ambience -->
-    <canvas id="bgCanvas" class="fixed inset-0 z-0 pointer-events-none opacity-60"></canvas>
-    <div class="fixed inset-0 z-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-900/40 via-black to-black pointer-events-none"></div>
+    <canvas id="bgCanvas" class="fixed inset-0 z-0 pointer-events-none opacity-50"></canvas>
+    <div class="fixed inset-0 z-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-900/30 via-black to-black pointer-events-none"></div>
     <div class="fixed inset-0 z-0 scanline pointer-events-none opacity-20"></div>
 
-    <!-- App Root -->
-    <div id="app" class="relative z-10 min-h-screen flex flex-col"></div>
+    <div id="app" class="relative z-10 min-h-screen flex flex-col opacity-100"></div>
 
     <script>
-        // --- Data Configuration ---
-        const UNIVERSE_DATA = {
-            marvel: {
-                id: 'marvel',
-                name: 'Marvel Universe',
-                gradient: 'bg-gradient-to-t from-red-600 via-red-900/60 to-transparent', 
-                themeColor: 'from-red-600 to-red-900',
-                accentColor: 'text-red-500',
-                bgGradient: 'bg-gradient-to-br from-red-950 via-gray-950 to-black',
-                description: "Legends. Gods. Monsters. The universe of the Avengers.",
-                bgImage: "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?auto=format&fit=crop&q=80",
-                icon: 'shield',
-                characters: [
-                    { name: 'Iron Man', link: 'iron-man.html', realName: 'Tony Stark', role: 'Tech Genius', desc: 'Genius, billionaire, playboy, philanthropist.' },
-                    { name: 'Captain America', link: 'captain-america.html', realName: 'Steve Rogers', role: 'Super Soldier', desc: 'The First Avenger and symbol of hope.' },
-                    { name: 'Thor', link: 'thor.html', realName: 'Thor Odinson', role: 'God of Thunder', desc: 'Asgardian warrior wielding the mighty Mjolnir.' },
-                    { name: 'Spider-Man', link: 'spider-man.html', realName: 'Peter Parker', role: 'Web Slinger', desc: 'Friendly neighborhood hero with spider-powers.' },
-                    { name: 'Black Widow', link: 'black-widow.html', realName: 'Natasha Romanoff', role: 'Master Spy', desc: 'Expert assassin and key member of SHIELD.' },
-                    { name: 'Hulk', link: 'hulk.html', realName: 'Bruce Banner', role: 'Powerhouse', desc: 'A scientist who transforms into a giant rage monster.' },
-                    { name: 'Dr. Strange', link: 'Dr-Strange.html', realName: 'Stephen Strange', role: 'Sorcerer Supreme', desc: 'Master of the Mystic Arts and protector of reality.' }
-                ]
-            },
-            dc: {
-                id: 'dc',
-                name: 'DC Universe',
-                gradient: 'bg-gradient-to-t from-blue-600 via-blue-900/60 to-transparent',
-                themeColor: 'from-blue-600 to-blue-900',
-                accentColor: 'text-blue-500',
-                bgGradient: 'bg-gradient-to-br from-blue-950 via-gray-950 to-black',
-                description: "Gods among us. The pantheon of the Justice League.",
-                bgImage: "https://images.unsplash.com/photo-1478720568477-152d9b164e63?auto=format&fit=crop&q=80",
-                icon: 'zap',
-                characters: [
-                    { name: 'Superman', link: 'superman.html', realName: 'Clark Kent', role: 'Man of Steel', desc: 'The last son of Krypton and protector of Earth.' },
-                    { name: 'Batman', link: 'batman.html', realName: 'Bruce Wayne', role: 'Dark Knight', desc: 'Gotham\'s vigilante detective and martial artist.' },
-                    { name: 'Wonder Woman', link: 'wonder-woman.html', realName: 'Diana Prince', role: 'Amazon Princess', desc: 'Warrior princess of Themyscira.' },
-                    { name: 'The Flash', link: 'flash.html', realName: 'Barry Allen', role: 'Speedster', desc: 'The fastest man alive, tapping into the Speed Force.' },
-                    { name: 'Aquaman', link: 'aquaman.html', realName: 'Arthur Curry', role: 'King of Atlantis', desc: 'Ruler of the seven seas and Earth\'s oceans.' },
-                    { name: 'Green Lantern', link: 'green-lantern.html', realName: 'Hal Jordan', role: 'Space Cop', desc: 'Wielder of a power ring fueled by willpower.' }
-                ]
-            },
-            other: {
-                id: 'other',
-                name: 'Indie & Others',
-                gradient: 'bg-gradient-to-t from-emerald-600 via-emerald-900/60 to-transparent',
-                themeColor: 'from-emerald-600 to-emerald-900',
-                accentColor: 'text-emerald-500',
-                bgGradient: 'bg-gradient-to-br from-emerald-950 via-gray-950 to-black',
-                description: "Anti-heroes and renegades from the fringes of comics.",
-                bgImage: "https://images.unsplash.com/photo-1608889476561-6242cfdbf622?auto=format&fit=crop&q=80",
-                icon: 'globe',
-                characters: [
-                    { name: 'Hellboy', link: 'hellboy.html', realName: 'Anung Un Rama', role: 'Paranormal Investigator', desc: 'A demon raised by humans to fight darkness.' },
-                    { name: 'Invincible', link: 'invincible.html', realName: 'Mark Grayson', role: 'Half-Viltrumite', desc: 'Teenager learning to handle immense power.' },
-                    { name: 'Spawn', link: 'spawn.html', realName: 'Al Simmons', role: 'Hellspawn', desc: 'Resurrected assassin with symbiotic powers.' },
-                    { name: 'Homelander', link: 'homelander.html', realName: 'John', role: 'Corporate Hero', desc: 'The most powerful, yet unstable, supe.' },
-                    { name: 'Judge Dredd', link: 'judge-dredd.html', realName: 'Joseph Dredd', role: 'Lawman', desc: 'Street judge in the dystopian Mega-City One.' },
-                    { name: 'The Mask', link: 'the-mask.html', realName: 'Stanley Ipkiss', role: 'Chaos Deity', desc: 'Wielder of a mask that grants cartoonish reality warping.' }
-                ]
-            }
-        };
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                // --- Data Configuration ---
+                const UNIVERSE_DATA = {
+                    marvel: {
+                        id: 'marvel',
+                        name: 'Marvel Universe',
+                        gradient: 'bg-gradient-to-t from-red-600 via-red-900/60 to-transparent', 
+                        themeColor: 'from-red-600 to-red-900',
+                        accentColor: 'text-red-500',
+                        bgGradient: 'bg-gradient-to-br from-red-950 via-gray-950 to-black',
+                        description: "Legends. Gods. Monsters. The universe of the Avengers.",
+                        bgImage: "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?auto=format&fit=crop&q=80",
+                        icon: 'shield',
+                        characters: [
+                            { name: 'Iron Man', link: 'iron-man.html', realName: 'Tony Stark', role: 'Tech Genius', desc: 'Genius, billionaire, playboy, philanthropist.' },
+                            { name: 'Captain America', link: 'captain-america.html', realName: 'Steve Rogers', role: 'Super Soldier', desc: 'The First Avenger and symbol of hope.' },
+                            { name: 'Thor', link: 'thor.html', realName: 'Thor Odinson', role: 'God of Thunder', desc: 'Asgardian warrior wielding the mighty Mjolnir.' },
+                            { name: 'Spider-Man', link: 'spider-man.html', realName: 'Peter Parker', role: 'Web Slinger', desc: 'Friendly neighborhood hero with spider-powers.' },
+                            { name: 'Black Widow', link: 'black-widow.html', realName: 'Natasha Romanoff', role: 'Master Spy', desc: 'Expert assassin and key member of SHIELD.' },
+                            { name: 'Hulk', link: 'hulk.html', realName: 'Bruce Banner', role: 'Powerhouse', desc: 'A scientist who transforms into a giant rage monster.' },
+                            { name: 'Dr. Strange', link: 'Dr-Strange.html', realName: 'Stephen Strange', role: 'Sorcerer Supreme', desc: 'Master of the Mystic Arts and protector of reality.' }
+                        ]
+                    },
+                    dc: {
+                        id: 'dc',
+                        name: 'DC Universe',
+                        gradient: 'bg-gradient-to-t from-blue-600 via-blue-900/60 to-transparent',
+                        themeColor: 'from-blue-600 to-blue-900',
+                        accentColor: 'text-blue-500',
+                        bgGradient: 'bg-gradient-to-br from-blue-950 via-gray-950 to-black',
+                        description: "Gods among us. The pantheon of the Justice League.",
+                        bgImage: "https://images.unsplash.com/photo-1478720568477-152d9b164e63?auto=format&fit=crop&q=80",
+                        icon: 'zap',
+                        characters: [
+                            { name: 'Superman', link: 'superman.html', realName: 'Clark Kent', role: 'Man of Steel', desc: 'The last son of Krypton and protector of Earth.' },
+                            { name: 'Batman', link: 'batman.html', realName: 'Bruce Wayne', role: 'Dark Knight', desc: 'Gotham\'s vigilante detective and martial artist.' },
+                            { name: 'Wonder Woman', link: 'wonder-woman.html', realName: 'Diana Prince', role: 'Amazon Princess', desc: 'Warrior princess of Themyscira.' },
+                            { name: 'The Flash', link: 'flash.html', realName: 'Barry Allen', role: 'Speedster', desc: 'The fastest man alive, tapping into the Speed Force.' },
+                            { name: 'Aquaman', link: 'aquaman.html', realName: 'Arthur Curry', role: 'King of Atlantis', desc: 'Ruler of the seven seas and Earth\'s oceans.' },
+                            { name: 'Green Lantern', link: 'green-lantern.html', realName: 'Hal Jordan', role: 'Space Cop', desc: 'Wielder of a power ring fueled by willpower.' }
+                        ]
+                    },
+                    other: {
+                        id: 'other',
+                        name: 'Indie & Others',
+                        gradient: 'bg-gradient-to-t from-emerald-600 via-emerald-900/60 to-transparent',
+                        themeColor: 'from-emerald-600 to-emerald-900',
+                        accentColor: 'text-emerald-500',
+                        bgGradient: 'bg-gradient-to-br from-emerald-950 via-gray-950 to-black',
+                        description: "Anti-heroes and renegades from the fringes of comics.",
+                        bgImage: "https://images.unsplash.com/photo-1608889476561-6242cfdbf622?auto=format&fit=crop&q=80",
+                        icon: 'globe',
+                        characters: [
+                            { name: 'Hellboy', link: 'hellboy.html', realName: 'Anung Un Rama', role: 'Paranormal Investigator', desc: 'A demon raised by humans to fight darkness.' },
+                            { name: 'Invincible', link: 'invincible.html', realName: 'Mark Grayson', role: 'Half-Viltrumite', desc: 'Teenager learning to handle immense power.' },
+                            { name: 'Spawn', link: 'spawn.html', realName: 'Al Simmons', role: 'Hellspawn', desc: 'Resurrected assassin with symbiotic powers.' },
+                            { name: 'Homelander', link: 'homelander.html', realName: 'John', role: 'Corporate Hero', desc: 'The most powerful, yet unstable, supe.' },
+                            { name: 'Judge Dredd', link: 'judge-dredd.html', realName: 'Joseph Dredd', role: 'Lawman', desc: 'Street judge in the dystopian Mega-City One.' },
+                            { name: 'The Mask', link: 'the-mask.html', realName: 'Stanley Ipkiss', role: 'Chaos Deity', desc: 'Wielder of a mask that grants cartoonish reality warping.' }
+                        ]
+                    }
+                };
 
-        const TICKER_NEWS = [
-            "DAILY BUGLE: Spider-Man Saves Bus from Bridge!",
-            "GOTHAM GAZETTE: Bat-Signal Lights Up the Sky Amidst Storm.",
-            "METROPOLIS: Superman Repairs Watchtower Orbit.",
-            "SHIELD INTEL: Unknown Energy Signature Detected in Wakanda.",
-            "VOUGHT NEWS: Homelander Approval Ratings Hit All-Time High.",
-            "MEGA-CITY ONE: Judges Report Drop in Block Wars.",
-            "DAILY PLANET: Lois Lane Interviews Wonder Woman."
-        ];
+                const TICKER_NEWS = [
+                    "DAILY BUGLE: Spider-Man Saves Bus from Bridge!",
+                    "GOTHAM GAZETTE: Bat-Signal Lights Up the Sky Amidst Storm.",
+                    "METROPOLIS: Superman Repairs Watchtower Orbit.",
+                    "SHIELD INTEL: Unknown Energy Signature Detected in Wakanda.",
+                    "VOUGHT NEWS: Homelander Approval Ratings Hit All-Time High.",
+                    "MEGA-CITY ONE: Judges Report Drop in Block Wars.",
+                    "DAILY PLANET: Lois Lane Interviews Wonder Woman."
+                ];
 
-        const ICONS = {
-            shield: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
-            zap: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
-            globe: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"/></svg>`,
-            arrowLeft: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>`,
-            star: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-yellow-400"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
-            externalLink: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>`
-        };
+                const ICONS = {
+                    shield: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+                    zap: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+                    globe: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+                    arrowLeft: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>`,
+                    star: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-yellow-400"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+                    externalLink: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>`
+                };
 
-        // --- State Management ---
-        let state = {
-            view: 'home' 
-        };
+                let state = { view: 'home' };
+                const app = document.getElementById('app');
 
-        const app = document.getElementById('app');
+                function renderHome() {
+                    const newsItems = [...TICKER_NEWS, ...TICKER_NEWS].map(news => 
+                        `<div class="ticker-item"><span>//</span> ${news}</div>`
+                    ).join('');
 
-        // --- Render Functions ---
-
-        function renderHome() {
-            // Duplicate news for smooth ticker loop
-            const newsItems = [...TICKER_NEWS, ...TICKER_NEWS].map(news => 
-                `<div class="ticker-item"><span>//</span> ${news}</div>`
-            ).join('');
-
-            return `
-                <div class="flex-1 flex flex-col justify-center items-center p-6 lg:p-12 relative overflow-hidden pb-20">
-                    
-                    <!-- Hero Text -->
-                    <div class="text-center mb-12 relative z-20">
-                        <div class="gsap-hero-title inline-block">
-                            <h1 class="text-6xl md:text-9xl font-bold tracking-tighter text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] mb-2 relative">
-                                COMIC
-                            </h1>
-                            <div class="glitch-wrapper" data-text="VERSES">
-                                <h1 class="text-6xl md:text-9xl font-bold tracking-tighter gradient-text drop-shadow-[0_0_15px_rgba(66,135,245,0.5)]">
-                                    VERSES
-                                </h1>
-                            </div>
-                        </div>
-                        <p class="gsap-hero-subtitle text-gray-300 text-lg md:text-xl mt-6 max-w-md mx-auto font-light tracking-widest uppercase border-t border-white/20 pt-4">
-                            Choose Your Allegiance
-                        </p>
-                    </div>
-
-                    <!-- Cards Container -->
-                    <div class="flex flex-col lg:flex-row gap-6 w-full max-w-7xl justify-center items-stretch perspective-1000 z-20">
-                        <!-- Marvel -->
-                        ${renderHomeCard('MARVEL', 'marvel', UNIVERSE_DATA.marvel.gradient, UNIVERSE_DATA.marvel.bgImage, 'shield', '01')}
-                        <!-- DC -->
-                        ${renderHomeCard('DC', 'dc', UNIVERSE_DATA.dc.gradient, UNIVERSE_DATA.dc.bgImage, 'zap', '02')}
-                        <!-- Other -->
-                        ${renderHomeCard('INDIE', 'other', UNIVERSE_DATA.other.gradient, UNIVERSE_DATA.other.bgImage, 'globe', '03')}
-                    </div>
-
-                    <!-- News Ticker -->
-                    <div class="ticker-wrap">
-                        <div class="ticker">
-                            ${newsItems}
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderHomeCard(title, id, gradientClass, bgImage, iconKey, num) {
-            return `
-                <button onclick="handleNavigation('${id}')" 
-                    onmousemove="handleCardTilt(event, this)"
-                    onmouseleave="resetCardTilt(this)"
-                    class="gsap-card group hoverable relative h-[280px] lg:h-[450px] w-full lg:w-1/3 rounded-3xl overflow-hidden cursor-none focus:outline-none focus:ring-4 focus:ring-white/30 transition-all duration-300 hover:lg:w-[45%] border border-white/20 bg-gray-800 shadow-[0_0_30px_rgba(0,0,0,0.5)] transform-gpu">
-                    
-                    <!-- Background Image -->
-                    <div class="absolute inset-0 bg-gray-700">
-                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 scale-110 group-hover:scale-100 opacity-80 group-hover:opacity-100"
-                            style="background-image: url('${bgImage}')"></div>
-                    </div>
-                    
-                    <!-- Overlay Gradient -->
-                    <div class="absolute inset-0 ${gradientClass} opacity-80 transition-opacity duration-300 group-hover:opacity-60"></div>
-                    
-                    <!-- Shine Effect -->
-                    <div class="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-tr from-transparent via-white to-transparent transform -translate-x-full group-hover:animate-shine transition-all pointer-events-none"></div>
-
-                    <!-- Content -->
-                    <div class="absolute inset-0 p-8 flex flex-col justify-between z-10 pointer-events-none">
-                        <div class="flex justify-between items-start">
-                            <span class="inline-block px-3 py-1 bg-black/50 backdrop-blur-md rounded-full text-white/90 font-mono text-xs tracking-widest border border-white/10">UNIVERSE ${num}</span>
-                            <div class="text-white drop-shadow-md transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12 bg-white/10 p-2 rounded-full backdrop-blur-sm">
-                                ${ICONS[iconKey].replace('width="24"', 'width="32"').replace('height="24"', 'height="32"')}
-                            </div>
-                        </div>
-
-                        <div class="text-left">
-                            <h2 class="text-5xl lg:text-7xl font-bold text-white tracking-tighter mb-2 translate-y-2 group-hover:translate-y-0 transition-transform duration-500 drop-shadow-lg">${title}</h2>
-                            <div class="h-[2px] w-12 group-hover:w-full bg-white transition-all duration-500 mb-4 shadow-[0_0_10px_white]"></div>
-                            <span class="inline-flex items-center gap-2 text-sm font-bold text-white tracking-widest uppercase opacity-80 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-500 delay-75">
-                                Enter Simulation <span class="text-lg animate-pulse">→</span>
-                            </span>
-                        </div>
-                    </div>
-                </button>
-            `;
-        }
-
-        function renderCategoryPage(id) {
-            const data = UNIVERSE_DATA[id];
-            
-            return `
-                <div class="min-h-screen ${data.bgGradient} text-white">
-                    <!-- Nav -->
-                    <nav class="gsap-nav fixed top-0 w-full p-6 z-50 flex justify-between items-center bg-gradient-to-b from-black/90 to-transparent backdrop-blur-[2px]">
-                        <button onclick="handleNavigation('home')" 
-                            class="hoverable group flex items-center gap-3 text-white/80 hover:text-white transition-colors bg-black/40 hover:bg-white/10 px-4 py-2 rounded-full border border-white/10">
-                            ${ICONS.arrowLeft}
-                            <span class="font-mono text-sm tracking-widest">RETURN</span>
-                        </button>
-                        <div class="font-bold text-xl tracking-tighter opacity-70">COMIC VERSES</div>
-                    </nav>
-
-                    <div class="container mx-auto px-6 pt-32 pb-12">
-                        <!-- Hero Section -->
-                        <div class="gsap-cat-hero mb-20">
-                            <div class="flex items-center gap-4 mb-6 opacity-80">
-                                <div class="w-12 h-12 ${data.accentColor}">
-                                    ${ICONS[data.icon].replace('width="24"', 'width="48"').replace('height="24"', 'height="48"')}
+                    return `
+                        <div class="flex-1 flex flex-col justify-center items-center p-6 lg:p-12 relative overflow-hidden pb-20">
+                            <div class="text-center mb-12 relative z-20">
+                                <div class="gsap-hero-title inline-block">
+                                    <h1 class="text-6xl md:text-9xl font-bold tracking-tighter text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] mb-2 relative">
+                                        COMIC
+                                    </h1>
+                                    <div class="glitch-wrapper" data-text="VERSES">
+                                        <h1 class="text-6xl md:text-9xl font-bold tracking-tighter gradient-text drop-shadow-[0_0_15px_rgba(66,135,245,0.5)]">
+                                            VERSES
+                                        </h1>
+                                    </div>
                                 </div>
-                                <span class="h-[1px] w-20 bg-white/30"></span>
-                                <span class="font-mono text-sm tracking-widest uppercase text-white/80">Selected Database</span>
+                                <p class="gsap-hero-subtitle text-gray-300 text-lg md:text-xl mt-6 max-w-md mx-auto font-light tracking-widest uppercase border-t border-white/20 pt-4">
+                                    Choose Your Allegiance
+                                </p>
                             </div>
-                            <h1 class="text-6xl md:text-8xl font-bold mb-6 tracking-tighter leading-none gradient-text inline-block drop-shadow-lg">
-                                ${data.name.toUpperCase()}
-                            </h1>
-                            <p class="text-xl md:text-2xl text-gray-300 font-light max-w-2xl border-l-4 border-white/20 pl-6 py-2">
-                                ${data.description}
-                            </p>
-                        </div>
 
-                        <!-- Grid -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            ${data.characters.map((char, index) => renderCharacterCard(char, data.accentColor, index)).join('')}
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderCharacterCard(char, accentColor, index) {
-            const profileLink = char.link || '#';
-            
-            return `
-                <div class="gsap-char-card hoverable glass-card rounded-2xl p-8 flex flex-col group hover:bg-white/10 transition-colors relative overflow-hidden shadow-lg border border-white/10">
-                    <div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity rotate-12 transform translate-x-4 -translate-y-4">
-                         <div class="w-40 h-40 ${accentColor}">${ICONS.star.replace('width="24"', 'width="160"').replace('height="24"', 'height="160"')}</div>
-                    </div>
-
-                    <div class="relative z-10 flex flex-col h-full">
-                        <div class="mb-auto">
-                            <div class="flex justify-between items-start mb-4">
-                                <h3 class="text-3xl font-bold text-white group-hover:text-blue-200 transition-colors tracking-tight">
-                                    ${char.name}
-                                </h3>
+                            <div class="flex flex-col lg:flex-row gap-6 w-full max-w-7xl justify-center items-stretch z-30">
+                                ${renderHomeCard('MARVEL', 'marvel', UNIVERSE_DATA.marvel.gradient, UNIVERSE_DATA.marvel.bgImage, 'shield', '01')}
+                                ${renderHomeCard('DC', 'dc', UNIVERSE_DATA.dc.gradient, UNIVERSE_DATA.dc.bgImage, 'zap', '02')}
+                                ${renderHomeCard('INDIE', 'other', UNIVERSE_DATA.other.gradient, UNIVERSE_DATA.other.bgImage, 'globe', '03')}
                             </div>
-                            <div class="inline-block px-3 py-1 rounded-full border border-white/20 bg-white/5 text-xs font-mono tracking-widest text-gray-300 mb-6">
-                                ${char.role.toUpperCase()}
+
+                            <div class="ticker-wrap">
+                                <div class="ticker">${newsItems}</div>
                             </div>
-                            <p class="text-gray-300 font-light leading-relaxed mb-8">
-                                ${char.desc}
-                            </p>
                         </div>
+                    `;
+                }
 
-                        <div class="pt-6 border-t border-white/10 flex items-center justify-between mt-auto">
-                            <span class="text-xs text-gray-500 font-mono">${char.realName}</span>
-                            <a href="${profileLink}" class="hoverable p-3 rounded-full bg-white text-black hover:scale-110 transition-transform shadow-[0_0_15px_rgba(255,255,255,0.4)]">
-                                ${ICONS.externalLink}
-                            </a>
+                function renderHomeCard(title, id, gradientClass, bgImage, iconKey, num) {
+                    return `
+                        <button onclick="handleNavigation('${id}')" 
+                            onmousemove="handleCardTilt(event, this)"
+                            onmouseleave="resetCardTilt(this)"
+                            class="gsap-card group hoverable relative h-[280px] lg:h-[450px] w-full lg:w-1/3 rounded-3xl overflow-hidden cursor-pointer focus:outline-none focus:ring-4 focus:ring-white/30 transition-all duration-300 hover:lg:w-[45%] border border-white/30 bg-gray-800 shadow-[0_0_30px_rgba(0,0,0,0.5)] transform-gpu">
+                            
+                            <div class="absolute inset-0 bg-gray-700">
+                                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 scale-110 group-hover:scale-100 opacity-80 group-hover:opacity-100"
+                                    style="background-image: url('${bgImage}')"></div>
+                            </div>
+                            
+                            <div class="absolute inset-0 ${gradientClass} opacity-80 transition-opacity duration-300 group-hover:opacity-60"></div>
+                            
+                            <div class="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-tr from-transparent via-white to-transparent transform -translate-x-full group-hover:animate-shine transition-all pointer-events-none"></div>
+
+                            <div class="absolute inset-0 p-8 flex flex-col justify-between z-10 pointer-events-none">
+                                <div class="flex justify-between items-start">
+                                    <span class="inline-block px-3 py-1 bg-black/50 backdrop-blur-md rounded-full text-white/90 font-mono text-xs tracking-widest border border-white/10">UNIVERSE ${num}</span>
+                                    <div class="text-white drop-shadow-md transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12 bg-white/10 p-2 rounded-full backdrop-blur-sm">
+                                        ${ICONS[iconKey].replace('width="24"', 'width="32"').replace('height="24"', 'height="32"')}
+                                    </div>
+                                </div>
+
+                                <div class="text-left">
+                                    <h2 class="text-5xl lg:text-7xl font-bold text-white tracking-tighter mb-2 translate-y-2 group-hover:translate-y-0 transition-transform duration-500 drop-shadow-lg">${title}</h2>
+                                    <div class="h-[2px] w-12 group-hover:w-full bg-white transition-all duration-500 mb-4 shadow-[0_0_10px_white]"></div>
+                                    <span class="inline-flex items-center gap-2 text-sm font-bold text-white tracking-widest uppercase opacity-80 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-500 delay-75">
+                                        Enter Simulation <span class="text-lg animate-pulse">→</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </button>
+                    `;
+                }
+
+                function renderCategoryPage(id) {
+                    const data = UNIVERSE_DATA[id];
+                    return `
+                        <div class="min-h-screen ${data.bgGradient} text-white">
+                            <nav class="gsap-nav fixed top-0 w-full p-6 z-50 flex justify-between items-center bg-gradient-to-b from-black/90 to-transparent backdrop-blur-[2px]">
+                                <button onclick="handleNavigation('home')" 
+                                    class="hoverable group flex items-center gap-3 text-white/80 hover:text-white transition-colors bg-black/40 hover:bg-white/10 px-4 py-2 rounded-full border border-white/10">
+                                    ${ICONS.arrowLeft}
+                                    <span class="font-mono text-sm tracking-widest">RETURN</span>
+                                </button>
+                                <div class="font-bold text-xl tracking-tighter opacity-70">COMIC VERSES</div>
+                            </nav>
+
+                            <div class="container mx-auto px-6 pt-32 pb-12">
+                                <div class="gsap-cat-hero mb-20">
+                                    <div class="flex items-center gap-4 mb-6 opacity-80">
+                                        <div class="w-12 h-12 ${data.accentColor}">
+                                            ${ICONS[data.icon].replace('width="24"', 'width="48"').replace('height="24"', 'height="48"')}
+                                        </div>
+                                        <span class="h-[1px] w-20 bg-white/30"></span>
+                                        <span class="font-mono text-sm tracking-widest uppercase text-white/80">Selected Database</span>
+                                    </div>
+                                    <h1 class="text-6xl md:text-8xl font-bold mb-6 tracking-tighter leading-none gradient-text inline-block drop-shadow-lg">
+                                        ${data.name.toUpperCase()}
+                                    </h1>
+                                    <p class="text-xl md:text-2xl text-gray-300 font-light max-w-2xl border-l-4 border-white/20 pl-6 py-2">
+                                        ${data.description}
+                                    </p>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    ${data.characters.map((char, index) => renderCharacterCard(char, data.accentColor, index)).join('')}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            `;
-        }
+                    `;
+                }
 
-        // --- Interaction Logic ---
+                function renderCharacterCard(char, accentColor, index) {
+                    const profileLink = char.link || '#';
+                    return `
+                        <div class="gsap-char-card hoverable glass-card rounded-2xl p-8 flex flex-col group hover:bg-white/10 transition-colors relative overflow-hidden shadow-lg border border-white/10">
+                            <div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity rotate-12 transform translate-x-4 -translate-y-4">
+                                <div class="w-40 h-40 ${accentColor}">${ICONS.star.replace('width="24"', 'width="160"').replace('height="24"', 'height="160"')}</div>
+                            </div>
 
-        // Custom Cursor Logic
-        const cursorDot = document.querySelector('.cursor-dot');
-        const cursorOutline = document.querySelector('.cursor-outline');
+                            <div class="relative z-10 flex flex-col h-full">
+                                <div class="mb-auto">
+                                    <div class="flex justify-between items-start mb-4">
+                                        <h3 class="text-3xl font-bold text-white group-hover:text-blue-200 transition-colors tracking-tight">
+                                            ${char.name}
+                                        </h3>
+                                    </div>
+                                    <div class="inline-block px-3 py-1 rounded-full border border-white/20 bg-white/5 text-xs font-mono tracking-widest text-gray-300 mb-6">
+                                        ${char.role.toUpperCase()}
+                                    </div>
+                                    <p class="text-gray-300 font-light leading-relaxed mb-8">
+                                        ${char.desc}
+                                    </p>
+                                </div>
 
-        window.addEventListener('mousemove', (e) => {
-            const posX = e.clientX;
-            const posY = e.clientY;
+                                <div class="pt-6 border-t border-white/10 flex items-center justify-between mt-auto">
+                                    <span class="text-xs text-gray-500 font-mono">${char.realName}</span>
+                                    <a href="${profileLink}" class="hoverable p-3 rounded-full bg-white text-black hover:scale-110 transition-transform shadow-[0_0_15px_rgba(255,255,255,0.4)]">
+                                        ${ICONS.externalLink}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
 
-            // Dot follows instantly
-            cursorDot.style.left = `${posX}px`;
-            cursorDot.style.top = `${posY}px`;
+                // --- Global Handlers ---
+                window.handleNavigation = function(viewId) {
+                    if (state.view === viewId) return;
+                    if (typeof gsap !== 'undefined') {
+                        gsap.to("#app", { opacity: 0, y: -20, duration: 0.3, ease: "power2.in", onComplete: () => {
+                            state.view = viewId;
+                            window.scrollTo(0, 0);
+                            render();
+                        }});
+                    } else {
+                        state.view = viewId;
+                        window.scrollTo(0, 0);
+                        render();
+                    }
+                }
 
-            // Outline follows with slight delay (using GSAP for smoothness)
-            cursorOutline.animate({
-                left: `${posX}px`,
-                top: `${posY}px`
-            }, { duration: 500, fill: "forwards" });
-        });
+                window.handleCardTilt = function(e, card) {
+                    if (typeof gsap === 'undefined') return;
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -10;
+                    const rotateY = ((x - centerX) / centerX) * 10;
 
-        // Add hovering state for interactive elements
-        document.body.addEventListener('mouseover', (e) => {
-            if (e.target.closest('button') || e.target.closest('a') || e.target.classList.contains('hoverable')) {
-                document.body.classList.add('hovering');
-            }
-        });
-        document.body.addEventListener('mouseout', (e) => {
-            if (e.target.closest('button') || e.target.closest('a') || e.target.classList.contains('hoverable')) {
-                document.body.classList.remove('hovering');
-            }
-        });
+                    gsap.to(card, {
+                        duration: 0.5,
+                        rotateX: rotateX,
+                        rotateY: rotateY,
+                        scale: 1.02,
+                        ease: 'power2.out',
+                        transformPerspective: 1000
+                    });
+                };
 
-        // 3D Tilt Effect for Cards
-        window.handleCardTilt = function(e, card) {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            
-            const rotateX = ((y - centerY) / centerY) * -10; // Max rotation deg
-            const rotateY = ((x - centerX) / centerX) * 10;
+                window.resetCardTilt = function(card) {
+                    if (typeof gsap === 'undefined') return;
+                    gsap.to(card, {
+                        duration: 0.5,
+                        rotateX: 0,
+                        rotateY: 0,
+                        scale: 1,
+                        ease: 'power2.out'
+                    });
+                };
 
-            gsap.to(card, {
-                duration: 0.5,
-                rotateX: rotateX,
-                rotateY: rotateY,
-                scale: 1.02,
-                ease: 'power2.out',
-                transformPerspective: 1000
-            });
-        };
+                // --- Animation Logic ---
+                function animateHome() {
+                    if (typeof gsap === 'undefined') return;
+                    gsap.set("#app", { opacity: 1, y: 0 });
+                    
+                    const tl = gsap.timeline();
+                    tl.from(".gsap-hero-title h1, .gsap-hero-title .glitch-wrapper", {
+                        y: 80, opacity: 0, duration: 1.2, stagger: 0.15, ease: "power4.out"
+                    })
+                    .from(".gsap-hero-subtitle", {
+                        y: 20, opacity: 0, duration: 0.8, ease: "power3.out"
+                    }, "-=0.8")
+                    // Changed to fromTo to guarantee visibility
+                    .fromTo(".gsap-card", 
+                        { y: 100, opacity: 0 },
+                        { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" }
+                    , "-=0.5")
+                    .from(".ticker-wrap", {
+                        y: 100, opacity: 0, duration: 1, ease: "power2.out"
+                    }, "-=0.5");
+                }
 
-        window.resetCardTilt = function(card) {
-            gsap.to(card, {
-                duration: 0.5,
-                rotateX: 0,
-                rotateY: 0,
-                scale: 1,
-                ease: 'power2.out'
-            });
-        };
+                function animateCategory() {
+                    if (typeof gsap === 'undefined') return;
+                    gsap.set("#app", { opacity: 1, y: 0 });
+                    const tl = gsap.timeline();
+                    tl.from(".gsap-nav", { y: -50, opacity: 0, duration: 0.8, ease: "power3.out" })
+                    .from(".gsap-cat-hero > *", { x: -30, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out" }, "-=0.4")
+                    .from(".gsap-char-card", { y: 60, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power2.out" }, "-=0.4");
+                }
 
-        // --- Background Canvas Animation ---
-        const canvas = document.getElementById('bgCanvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let animationFrameId;
+                function render() {
+                    if (state.view === 'home') {
+                        app.innerHTML = renderHome();
+                        setTimeout(animateHome, 0); 
+                    } else {
+                        app.innerHTML = renderCategoryPage(state.view);
+                        setTimeout(animateCategory, 0); 
+                    }
+                }
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2;
-                this.speedX = (Math.random() - 0.5) * 0.5;
-                this.speedY = (Math.random() - 0.5) * 0.5;
-                this.opacity = Math.random() * 0.5 + 0.1;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-            }
-            draw() {
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function initParticles() {
-            particles = [];
-            const particleCount = Math.min(window.innerWidth / 10, 100);
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            // Connect particles
-            particles.forEach((a, index) => {
-                particles.slice(index + 1).forEach(b => {
-                    const dx = a.x - b.x;
-                    const dy = a.y - b.y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    if (distance < 100) {
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 - distance/1000})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.beginPath();
-                        ctx.moveTo(a.x, a.y);
-                        ctx.lineTo(b.x, b.y);
-                        ctx.stroke();
+                // --- Initialization ---
+                
+                // Cursor Logic
+                const cursorDot = document.querySelector('.cursor-dot');
+                const cursorOutline = document.querySelector('.cursor-outline');
+                
+                document.body.addEventListener('mousemove', (e) => {
+                    if (cursorDot && cursorOutline) {
+                        cursorDot.style.display = 'block';
+                        cursorOutline.style.display = 'block';
+                        cursorDot.style.left = `${e.clientX}px`;
+                        cursorDot.style.top = `${e.clientY}px`;
+                        cursorOutline.animate({
+                            left: `${e.clientX}px`,
+                            top: `${e.clientY}px`
+                        }, { duration: 500, fill: "forwards" });
                     }
                 });
-            });
-            animationFrameId = requestAnimationFrame(animateParticles);
-        }
-        
-        initParticles();
-        animateParticles();
 
+                document.body.addEventListener('mouseover', (e) => {
+                    if (e.target.closest('.hoverable') || e.target.closest('button') || e.target.closest('a')) {
+                        document.body.classList.add('hovering');
+                    }
+                });
+                document.body.addEventListener('mouseout', (e) => {
+                    if (e.target.closest('.hoverable') || e.target.closest('button') || e.target.closest('a')) {
+                        document.body.classList.remove('hovering');
+                    }
+                });
 
-        // --- Navigation & Rendering ---
-        
-        window.handleNavigation = function(viewId) {
-            if (state.view === viewId) return;
+                // Canvas Logic
+                const canvas = document.getElementById('bgCanvas');
+                if (canvas) {
+                    const ctx = canvas.getContext('2d');
+                    let particles = [];
 
-            // Animate Out
-            const tl = gsap.timeline({
-                onComplete: () => {
-                    state.view = viewId;
-                    window.scrollTo(0, 0);
-                    render();
+                    function resizeCanvas() {
+                        canvas.width = window.innerWidth;
+                        canvas.height = window.innerHeight;
+                    }
+                    window.addEventListener('resize', resizeCanvas);
+                    resizeCanvas();
+
+                    class Particle {
+                        constructor() {
+                            this.x = Math.random() * canvas.width;
+                            this.y = Math.random() * canvas.height;
+                            this.size = Math.random() * 2;
+                            this.speedX = (Math.random() - 0.5) * 0.5;
+                            this.speedY = (Math.random() - 0.5) * 0.5;
+                            this.opacity = Math.random() * 0.5 + 0.1;
+                        }
+                        update() {
+                            this.x += this.speedX;
+                            this.y += this.speedY;
+                            if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                            if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+                        }
+                        draw() {
+                            ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                            ctx.beginPath();
+                            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                    }
+
+                    function animateParticles() {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        particles.forEach(p => { p.update(); p.draw(); });
+                        particles.forEach((a, index) => {
+                            particles.slice(index + 1).forEach(b => {
+                                const dx = a.x - b.x;
+                                const dy = a.y - b.y;
+                                const dist = Math.sqrt(dx * dx + dy * dy);
+                                if (dist < 100) {
+                                    ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 - dist/1000})`;
+                                    ctx.lineWidth = 0.5;
+                                    ctx.beginPath();
+                                    ctx.moveTo(a.x, a.y);
+                                    ctx.lineTo(b.x, b.y);
+                                    ctx.stroke();
+                                }
+                            });
+                        });
+                        requestAnimationFrame(animateParticles);
+                    }
+
+                    const pCount = Math.min(window.innerWidth / 10, 80);
+                    for (let i = 0; i < pCount; i++) particles.push(new Particle());
+                    animateParticles();
                 }
-            });
 
-            tl.to("#app", { opacity: 0, y: -20, duration: 0.3, ease: "power2.in" });
-        }
-
-        function render() {
-            if (state.view === 'home') {
-                app.innerHTML = renderHome();
-                animateHome();
-            } else {
-                app.innerHTML = renderCategoryPage(state.view);
-                animateCategory();
+                render();
+            } catch (err) {
+                console.error("Render error:", err);
+                document.getElementById('app').innerHTML = `<div class="p-10 text-white">Error loading multiverse simulation. Please refresh.</div>`;
             }
-        }
-
-        function animateHome() {
-            gsap.set("#app", { opacity: 1, y: 0 });
-            
-            const tl = gsap.timeline();
-
-            tl.from(".gsap-hero-title h1, .gsap-hero-title .glitch-wrapper", {
-                y: 80,
-                opacity: 0,
-                duration: 1.2,
-                stagger: 0.15,
-                ease: "power4.out"
-            })
-            .from(".gsap-hero-subtitle", {
-                y: 20,
-                opacity: 0,
-                duration: 0.8,
-                ease: "power3.out"
-            }, "-=0.8")
-            .from(".gsap-card", {
-                y: 100,
-                opacity: 0,
-                duration: 1,
-                stagger: 0.2,
-                ease: "power3.out"
-            }, "-=0.5")
-            .from(".ticker-wrap", {
-                y: 100,
-                opacity: 0,
-                duration: 1,
-                ease: "power2.out"
-            }, "-=0.5");
-        }
-
-        function animateCategory() {
-            gsap.set("#app", { opacity: 1, y: 0 });
-
-            const tl = gsap.timeline();
-
-            tl.from(".gsap-nav", {
-                y: -50,
-                opacity: 0,
-                duration: 0.8,
-                ease: "power3.out"
-            })
-            .from(".gsap-cat-hero > *", {
-                x: -30,
-                opacity: 0,
-                duration: 0.8,
-                stagger: 0.1,
-                ease: "power3.out"
-            }, "-=0.4")
-            .from(".gsap-char-card", {
-                y: 60,
-                opacity: 0,
-                duration: 0.8,
-                stagger: 0.1,
-                ease: "power2.out"
-            }, "-=0.4");
-        }
-
-        // Initial Render
-        render();
-
+        });
     </script>
 </body>
 </html>
